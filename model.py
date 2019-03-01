@@ -4,6 +4,9 @@ from keras.layers import Dense
 model = Sequential()
 
 #add model layers
-model.add(Dense(10, activation='relu', input_shape=(n_cols,)))
-model.add(Dense(10, activation='relu'))
-model.add(Dense(1))
+model.add(Dense(200, activation='relu', input_shape=(n_cols,)))
+model.add(Dense(200, activation='relu'))
+model.add(Dense(200, activation='relu'))
+model.add(Dense(200, activation='relu'))
+
+model.add(Dense(200))
