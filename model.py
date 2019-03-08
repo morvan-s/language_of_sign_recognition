@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 
 #create model
 model = Sequential()
+<<<<<<< HEAD
 X_train = np.load('X.npy')
 y_train = np.load('Y.npy')
 X_test= np.load('X.npy')
@@ -14,6 +15,12 @@ y_test= np.load('Y.npy')
 j=0
 Y_train=[]
 for list in y_train:
+=======
+X_train = np.load('datasets/images.npy')
+y_train = np.load('datasets/classes.npy')
+X_test= np.load('datasets/images.npy')
+y_test= np.load('datasets/classes.npy')
+>>>>>>> 394c671b1912f823c53772229fff9e7198af4e05
 
      [Y_train.append(i) for i,x in enumerate(list) if x == 1]
      j+=1
