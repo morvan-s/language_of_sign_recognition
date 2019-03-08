@@ -1,8 +1,10 @@
 import numpy as np
 import random
 
+
 images = np.load('datasets/images.npy')
 classes = np.load('datasets/classes.npy')
+images = images.reshape(images.shape[0], 1, 64, 64)
 
 classesDataset = []
 for c in classes:
@@ -12,11 +14,12 @@ for c in classes:
             break
 
 dataset = []
-for i in range (0, len(images)):
-    dataset.append((classesDataset[i], images[i]))
+
 
 random.shuffle(dataset)
 
-separationIndex = int(len(dataset) * 0.8)
-trainDataset = dataset[:separationIndex]
-evalDataset = dataset[separationIndex:]
+separationIndex = int(len(images) * 0.8)
+trainDataset = images[:separationIndex]
+evalDataset = images[separationIndex:]
+trainClasses = images[:separationIndex]
+evalClasses = images[separationIndex:]

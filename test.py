@@ -6,37 +6,19 @@ from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
 from keras.datasets import mnist
+import main
 
-# 4. Load pre-shuffled MNIST data into train and test sets
-X_train = np.load('X.npy')
-y_train = np.load('Y.npy')
-X_test= np.load('X.npy')
-y_test= np.load('Y.npy')
-j=0
-Y_train=[]
-for list in y_train:
 
-     [Y_train.append(i) for i,x in enumerate(list) if x == 1]
-     j+=1
-# 5. Preprocess input data
-X_train = X_train.reshape(X_train.shape[0], 1, 64, 64)
-X_test = X_test.reshape(X_test.shape[0], 1, 64, 64)
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
-X_train /= 255
-X_test /= 255
 
-print(Y_train[:10])
+X_train = main.trainDataset
+y_train = main.trainDataset
 
-# 6. Preprocess class labels
-Y_train = np_utils.to_categorical(Y_train, 10)
-Y_test = np_utils.to_categorical(Y_train, 10)
-print(X_train.shape)
-# 7. Define model architecture
+print(X_train[0][1].shape)
+
+
 model = Sequential()
 
 model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=(1,64,64)))
-print (model.output_shape)
 model.add(Convolution2D(32, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.25))
