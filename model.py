@@ -1,15 +1,54 @@
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout, Activation, Flatten
+from keras.layers import Convolution2D, MaxPooling2D
+from keras.utils import np_utils
+import numpy as np
+from matplotlib import pyplot as plt
+
 #create model
 model = Sequential()
-train_dataset = np.load('X.npy') 
-#one-hot encode target column
+X_train = np.load('X.npy')
+y_train = np.load('Y.npy')
+X_test= np.load('X.npy')
+y_test= np.load('Y.npy')
 
-#vcheck that target column has been converted
-n_images= len(train_dataset)
-#add model layers
-model.add(Dense(200, activation='relu', input_shape=(n_images,)))
-model.add(Dense(200, activation='relu'))
-model.add(Dense(200, activation='relu'))
-model.add(Dense(200, activation='relu'))
-model.add(Dense(1, activation='softmax'))
+
+plt.imshow(X_train[0])
+
+# 5. Preprocess input data
+X_train = X_train.reshape(X_train.shape[0], 1, 64, 64)
+X_test = X_test.reshape(X_test.shape[0], 1, 64, 64)
+X_train = X_train.astype('float32')
+X_test = X_test.astype('float32')
+X_train /= 255
+X_test /= 255
+
+# 6. Preprocess class labels
+Y_train = np_utils.to_categorical(y_train, 9)
+Y_test = np_utils.to_categorical(y_test, 9)
+
+print(X_train.shape)
+# 7. Define model architecture
+model = Sequential()
+
+model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=(1,64,64)))
+model.add(Convolution2D(32, 3, 3, activation='relu'))
+model.add(MaxPooling2D(pool_size=(2,2)))
+model.add(Dropout(0.25))
+
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(10, activation='softmax'))
+
+# 8. Compile model
+model.compile(loss='categorical_crossentropy',
+              optimizer='adam',
+              metrics=['accuracy'])
+
+# 9. Fit model on training data
+model.fit(X_train, Y_train,
+          batch_size=32, nb_epoch=10, verbose=1)
+
+# 10. Evaluate model on test data
+score = model.evaluate(X_test, Y_test, verbose=0)
