@@ -2,7 +2,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 #create model
 model = Sequential()
-train_dataset = np.load('X.npy') 
+train_dataset = np.load('datasets/images.npy') 
 #one-hot encode target column
 
 #vcheck that target column has been converted
