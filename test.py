@@ -1,12 +1,13 @@
+import numpy as np
+np.random.seed(123)  # for reproducibility
+
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
-import numpy as np
-from matplotlib import pyplot as plt
+from keras.datasets import mnist
 
-#create model
-model = Sequential()
+# 4. Load pre-shuffled MNIST data into train and test sets
 X_train = np.load('X.npy')
 y_train = np.load('Y.npy')
 X_test= np.load('X.npy')
@@ -17,24 +18,33 @@ for list in y_train:
 
      [Y_train.append(i) for i,x in enumerate(list) if x == 1]
      j+=1
+# 5. Preprocess input data
+X_train = X_train.reshape(X_train.shape[0], 1, 64, 64)
+X_test = X_test.reshape(X_test.shape[0], 1, 64, 64)
+X_train = X_train.astype('float32')
+X_test = X_test.astype('float32')
+X_train /= 255
+X_test /= 255
 
 print(Y_train[:10])
-n_cols = X_train.shape[1]
-
 
 # 6. Preprocess class labels
-Y_train = np_utils.to_categorical(y_train, 9)
-Y_test = np_utils.to_categorical(y_test, 9)
-
+Y_train = np_utils.to_categorical(Y_train, 10)
+Y_test = np_utils.to_categorical(Y_train, 10)
 print(X_train.shape)
 # 7. Define model architecture
 model = Sequential()
-model.add(Dense(250, activation='relu', input_shape=(n_cols,)))
-model.add(Dense(250, activation='relu'))
-model.add(Dense(250, activation='relu'))
-model.add(Dense(250, activation='relu'))
-model.add(Dense(250, activation='relu'))
-model.add(Dense(2, activation='softmax'))
+
+model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=(1,64,64)))
+print (model.output_shape)
+model.add(Convolution2D(32, 3, 3, activation='relu'))
+model.add(MaxPooling2D(pool_size=(2,2)))
+model.add(Dropout(0.25))
+
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(10, activation='softmax'))
 
 # 8. Compile model
 model.compile(loss='categorical_crossentropy',
