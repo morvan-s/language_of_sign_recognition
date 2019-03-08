@@ -13,7 +13,6 @@ import main
 X_train = main.trainDataset
 y_train = main.trainDataset
 
-print(X_train[0][1].shape)
 
 
 model = Sequential()
