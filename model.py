@@ -13,7 +13,9 @@ X_test= np.load('X.npy')
 y_test= np.load('Y.npy')
 
 
-plt.imshow(X_train[0])
+n_cols = X_train.shape[1]
+
+
 
 # 5. Preprocess input data
 X_train = X_train.reshape(X_train.shape[0], 1, 64, 64)
@@ -31,15 +33,11 @@ print(X_train.shape)
 # 7. Define model architecture
 model = Sequential()
 
-model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=(1,64,64)))
-model.add(Convolution2D(32, 3, 3, activation='relu'))
-model.add(MaxPooling2D(pool_size=(2,2)))
-model.add(Dropout(0.25))
-
-model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(10, activation='softmax'))
+#add model layers
+model_mc.add(Dense(200, activation='relu', input_shape=(n_cols,)))
+model_mc.add(Dense(200, activation='relu'))
+model_mc.add(Dense(200, activation='relu'))
+model_mc.add(Dense(1))
 
 # 8. Compile model
 model.compile(loss='categorical_crossentropy',
