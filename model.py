@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 import main
 from keras.utils import to_categorical
 from keras.preprocessing.image import ImageDataGenerator
-
+import cv2
 #create model
 model = Sequential()
 
@@ -16,36 +16,39 @@ Y_train = main.trainClasses
 X_test = main.evalDataset
 Y_test = main.evalClasses
 
-
 image_gen  = ImageDataGenerator(
         rotation_range=30,
         width_shift_range=0.2,
         height_shift_range=0.2,
         rescale=1.0/255,
-        shear_range=0.2,
         zoom_range=0.2)
+unique, count= np.unique(Y_train, return_counts=True)
 
+plt.subplot(5, 4, index + 1)
+plt.axis('off')
+plt.imshow(X_train[900].squeeze(), cmap=plt.cm.gray_r, interpolation='nearest')
+plt.title('label: ' +str(Y_train[900]) )
+plt.show()
 
 model = Sequential()
-model.add(Convolution2D(6, (3, 3), activation='relu', input_shape=(1,64,64), data_format='channels_first'))
-model.add(MaxPooling2D(pool_size=(2, 2), data_format='channels_first'))
-model.add(Convolution2D(12, (3, 3), activation='relu', input_shape=(1,64,64), data_format='channels_first'))
-model.add(MaxPooling2D(pool_size=(2, 2), data_format='channels_first'))
-model.add(Convolution2D(24, (3, 3), activation='relu', input_shape=(1,64,64), data_format='channels_first'))
-model.add(MaxPooling2D(pool_size=(2, 2), data_format='channels_first'))
-model.add(Convolution2D(36, (3, 3), activation='relu', input_shape=(1,64,64), data_format='channels_first'))
-model.add(MaxPooling2D(pool_size=(2, 2), data_format='channels_first'))
+model.add(Convolution2D(10, (2, 2), activation='relu', input_shape=(64,64,1), data_format='channels_last'))
+model.add(MaxPooling2D(pool_size=(2, 2), data_format='channels_last'))
+model.add(Convolution2D(20, (2, 2), activation='relu', input_shape=(64,64,1), data_format='channels_last'))
+model.add(MaxPooling2D(pool_size=(2, 2), data_format='channels_last'))
+model.add(Convolution2D(30, (2, 2), activation='relu', input_shape=(64,64,1), data_format='channels_last'))
+model.add(MaxPooling2D(pool_size=(2, 2), data_format='channels_last'))
+model.add(Convolution2D(40, (2, 2), activation='relu', input_shape=(64,64,1), data_format='channels_last'))
+model.add(MaxPooling2D(pool_size=(2, 2), data_format='channels_last'))
 model.add(Flatten())
 model.add(Dropout(0.5))
 model.add(Dense(128, activation='relu'))
-
 model.add(Dense(10, activation='softmax'))
 # 8. Compile model
 model.compile(loss='categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
 
-image_gen.fit(X_train, augment=True)
+image_gen.fit(X_train)
 
 
 batch_size = 128
