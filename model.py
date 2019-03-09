@@ -1,13 +1,14 @@
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation, Flatten
-from keras.layers import Convolution2D, MaxPooling2D
-from keras.utils import np_utils
-import numpy as np
-from matplotlib import pyplot as plt
-import dataset
-from keras.utils import to_categorical
+from keras.layers import Dense, Dropout, Activation, Flatten, Convolution2D, MaxPooling2D
+from keras.utils import np_utils, to_categorical
 from keras.preprocessing.image import ImageDataGenerator
+from matplotlib import pyplot as plt
+
+import tensorflowjs as tfjs
+import numpy as np
+import dataset
 import cv2
+
 #create model
 model = Sequential()
 
@@ -49,6 +50,7 @@ batch_size = 128
 #           epochs=30,
 #           verbose=1)
 # 9. Fit model on training data
-model.fit(X_train, Y_train, batch_size=32, nb_epoch=10, verbose=1)
+model.fit(X_train, Y_train, batch_size=32, nb_epoch=15, verbose=1)
 
 score = model.evaluate(X_eval, Y_eval, verbose=0)
+tfjs.converters.save_keras_model(model, 'demo/model.json')
