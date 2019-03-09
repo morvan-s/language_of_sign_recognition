@@ -34,12 +34,12 @@ var video = document.getElementById('video');
 const images = [];
 
 
-const result = await net.classify(imgEl);
-console.log(result);
+// const result = await net.classify(imgEl);
+// console.log(result);
 
 // Trigger photo take
 document.getElementById("snap").addEventListener("click", function() {
-  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+  canvas.getContext('2d').drawImage(video, 100, 100, canvas.width-100, canvas.height-100);
   let image = new Image()
   image.src = canvas.toDataURL();
   images.push(image);
