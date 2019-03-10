@@ -22,7 +22,7 @@ async function initialise() {
       input = tf.reshape(input,[1].concat(input.shape));
 
 
-      let analysedImageLength = 300;
+      let analysedImageLength = 400;
       centery = Math.floor(input.shape[1] / 2)
       centerx = Math.floor(input.shape[2] / 2)
       half = Math.floor(analysedImageLength / 2);

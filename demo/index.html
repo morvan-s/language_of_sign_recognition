@@ -7,13 +7,14 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
   </head>
   <body>
-    <section>
+    <header>
       <h1>Demonstration language of sign recognition</h1>
-      <div>
-        <video id="video" width="640" height="480" autoplay></video>
-        <button id="snap">detection</button>
-        <canvas id="canvas" width="640" height="480"></canvas>
-      </div>
+      <button id="snap">detection</button>
+    </header>
+    <section>
+      <video id="video" width="640" height="480" autoplay></video>
+      <canvas id="canvas"></canvas>
+      <div id ="analysisBorders"><strong id="result">NaN</strong></div>
     </section>
     <script src="script.js"></script>
   </body>

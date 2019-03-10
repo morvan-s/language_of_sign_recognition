@@ -1,0 +1,64 @@
+:root {
+  --main-color: #8b6ffb;
+}
+
+html, body{
+  margin: 0px;
+  padding: 0px;
+}
+
+h1,button{
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+header{
+  z-index: 2;
+  width: 100%;
+  background: var(--main-color);
+  position: absolute;
+}
+
+section{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  top:0px;
+  left: 0px;
+  z-index: 1;
+}
+
+canvas{
+  position: absolute;
+  z-index: 3;
+  top: 101px;
+  left: 0;
+}
+
+video{
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  height: auto;
+  width: auto;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) scale(-1, 1);
+}
+
+#analysisBorders{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: calc(400 * (100vw / 640));
+  height: calc(400 * (100vh / 640));
+  border: 3px dashed var(--main-color);
+}
+
+#result{
+  
+}
