@@ -13,14 +13,34 @@ async function initialise() {
   const model = await tf.loadLayersModel('https://stivenmorvan.fr/projects/language_of_sign_recognition/demo/model/model.json');
 
   async function capture() {
-      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-      let image = new Image()
-      image.src = canvas.toDataURL();
-      images.push(image);
-      console.log(model);
-      const example = tf.browser.fromPixels(video)
-      const result = model.predict(example);
+
+      let input = tf.browser.fromPixels(video,1);
+      // TODO: check Greyscale
+      let originalShape = input.shape;
+      input = tf.reshape(input,[1].concat(input.shape));
+
+      let analysedImageLength = 300;
+      centery = Math.floor(input.shape[1] / 2)
+      centerx = Math.floor(input.shape[2] / 2)
+      half = Math.floor(analysedImageLength / 2);
+      x1 = centerx - half
+      y1 = centery - half
+      x2 = centerx + half
+      y2 = centery + half
+
+      input = tf.image.cropAndResize(input.asType('float32'), [[y1, x1, y2, x2]], [1], [64,64])
+
+      const result = model.predict(input);
+      result.print()
       console.log(result);
+
+      input = tf.reshape(input,[64,64,1]);
+      tf.browser.toPixels(input,canvas);
+
+
+      // canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+      // let image = new Image()
+      // image.src = canvas.toDataURL();
       await tf.nextFrame();
   }
   // const result = await net.classify(imgEl);

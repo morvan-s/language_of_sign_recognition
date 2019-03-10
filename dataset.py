@@ -17,7 +17,7 @@ def get_dataset():
     classesDataset[1855:] = 5
 
     classesDataset = np_utils.to_categorical(classesDataset, 10)
-    classesDataset
+
     separationIndex = int(len(images) * 0.8)
     images = images.reshape(images.shape[0], 64, 64, 1)
 
@@ -28,3 +28,4 @@ def get_dataset():
     #TODO : Shuffle the data
 
     return trainDataset, trainClasses, evalDataset, evalClasses
+get_dataset()
