@@ -8,8 +8,6 @@ async function initialise() {
 
   const model = await tf.loadLayersModel('https://stivenmorvan.fr/projects/language_of_sign_recognition/demo/model/model.json');
 
-  // TODO:  REFACTO In comming !!!
-
   async function capture() {
       while(true){
         let input = tf.browser.fromPixels(video,1);
@@ -17,7 +15,7 @@ async function initialise() {
         input = input.div(tf.scalar(255))
         input = tf.reshape(input,[1].concat(input.shape));
 
-        let analysedImageLength = 300;
+        let analysedImageLength = 200;
         centery = Math.floor(input.shape[1] / 2)
         centerx = Math.floor(input.shape[2] / 2)
         half = Math.floor(analysedImageLength / 2);
@@ -37,11 +35,10 @@ async function initialise() {
         } else {
           result.textContent="NaN";
         }
-        await sleep(2000);
         input = tf.reshape(input,[64,64,1]);
         tf.browser.toPixels(input,canvas);
 
-        await sleep(2000);
+        await sleep(700);
         await tf.nextFrame();
       }
   }

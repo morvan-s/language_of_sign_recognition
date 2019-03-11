@@ -1,5 +1,5 @@
 :root {
-  --main-color: #8b6ffb;
+  --main-color: #1abc9c;
 }
 
 html, body{
@@ -16,12 +16,22 @@ header{
   padding: 10px;
 }
 
-h1{
+header h1{
   display: inline-block;
   font-family: Arial;
   margin: 0;
   padding: 0;
+  font-size: 1.5em;
 }
+
+header a{
+  font-family: Arial;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5em;
+  float: right;
+}
+
 section{
   width: 100%;
   height: 100%;
@@ -35,8 +45,9 @@ section{
 canvas{
   position: absolute;
   z-index: 3;
-  top: 101px;
+  bottom: 0;
   left: 0;
+  border: 2px solid var(--main-color);
 }
 
 video{
@@ -56,8 +67,8 @@ video{
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: calc(300 * (100vw / 640));
-  height: calc(300 * (100vh / 640));
+  width: calc(200 * (100vw / 640));
+  height: calc(200 * (100vh / 400));
   border: 3px dashed var(--main-color);
 }
 
@@ -69,4 +80,5 @@ video{
   bottom: -50px;
   width: 100%;
   text-align: center;
+    text-shadow: -1px 0 var(--main-color), 0 1px var(--main-color), 1px 0 var(--main-color), 0 -1px var(--main-color);
 }
