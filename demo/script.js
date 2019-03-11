@@ -37,11 +37,11 @@ async function initialise() {
         } else {
           result.textContent="NaN";
         }
+        await sleep(2000);
         input = tf.reshape(input,[64,64,1]);
         tf.browser.toPixels(input,canvas);
-        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        await sleep(200)
+        await sleep(2000);
         await tf.nextFrame();
       }
   }
