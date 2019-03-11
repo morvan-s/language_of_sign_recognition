@@ -1,61 +1,55 @@
-// Grab elements, create settings, etc.
-let video = document.getElementById('video');
-const images = [];
+var canvas = document.getElementById('canvas');
+var video = document.getElementById('video');
+var result = document.getElementById('result');
 
+const sleep = m => new Promise(r => setTimeout(r, m));
 
 async function initialise() {
-  var canvas = document.getElementById('canvas');
-  var context = canvas.getContext('2d');
-  var video = document.getElementById('video');
 
-
-  //const model = await tf.loadLayersModel('file://model/model.json');
   const model = await tf.loadLayersModel('https://stivenmorvan.fr/projects/language_of_sign_recognition/demo/model/model.json');
 
-// TODO:  REFACTO In comming !!!
+  // TODO:  REFACTO In comming !!!
 
   async function capture() {
+      while(true){
+        let input = tf.browser.fromPixels(video,1);
+        let originalShape = input.shape;
+        input = input.div(tf.scalar(255))
+        input = tf.reshape(input,[1].concat(input.shape));
 
-      let input = tf.browser.fromPixels(video,1);
-      let originalShape = input.shape;
-      input = input.div(tf.scalar(255))
-      input = tf.reshape(input,[1].concat(input.shape));
+        let analysedImageLength = 300;
+        centery = Math.floor(input.shape[1] / 2)
+        centerx = Math.floor(input.shape[2] / 2)
+        half = Math.floor(analysedImageLength / 2);
+        x1 = centerx - half
+        y1 = centery - half
+        x2 = centerx + half
+        y2 = centery + half
 
+        input = tf.image.cropAndResize(input.asType('float32'), [[y1/input.shape[1], x1/input.shape[2], y2/input.shape[1], x2/input.shape[2]]], [0], [64,64])
 
-      let analysedImageLength = 400;
-      centery = Math.floor(input.shape[1] / 2)
-      centerx = Math.floor(input.shape[2] / 2)
-      half = Math.floor(analysedImageLength / 2);
-      x1 = centerx - half
-      y1 = centery - half
-      x2 = centerx + half
-      y2 = centery + half
+        const res = (model.predict(input)).arraySync()[0];
+        console.log(res);
+        let i = res.indexOf(Math.max(...res));
+        console.log(i);
+        if(res[i] >= 0.4){
+          result.textContent=i;
+        } else {
+          result.textContent="NaN";
+        }
+        input = tf.reshape(input,[64,64,1]);
+        tf.browser.toPixels(input,canvas);
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      input = tf.image.cropAndResize(input.asType('float32'), [[y1/input.shape[1], x1/input.shape[2], y2/input.shape[1], x2/input.shape[2]]], [0], [64,64])
-
-      const result = model.predict(input);
-      result.print()
-
-      input = tf.reshape(input,[64,64,1]);
-      tf.browser.toPixels(input,canvas);
-
-
-
-      // canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-      // let image = new Image()
-      // image.src = canvas.toDataURL();
-      await tf.nextFrame();
+        await sleep(200)
+        await tf.nextFrame();
+      }
   }
-  // const result = await net.classify(imgEl);
-  // console.log(result);
 
-  // Trigger photo take
-  document.getElementById("snap").addEventListener("click", function() {
-    capture();
-  });
+  capture();
 }
 
-// Get access to the camera!
+// Initialise the camera and the detection
 if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     // Not adding `{ audio: true }` since we only want video now
     navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {

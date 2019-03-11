@@ -5,6 +5,7 @@
 html, body{
   margin: 0px;
   padding: 0px;
+  color: white;
 }
 
 h1,button{
@@ -54,11 +55,17 @@ video{
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: calc(400 * (100vw / 640));
-  height: calc(400 * (100vh / 640));
+  width: calc(300 * (100vw / 640));
+  height: calc(300 * (100vh / 640));
   border: 3px dashed var(--main-color);
 }
 
 #result{
-  
+  font-size: 2em;
+  font-family: arial;
+  color: white;
+  position: absolute;
+  bottom: -50px;
+  width: 100%;
+  text-align: center;
 }
