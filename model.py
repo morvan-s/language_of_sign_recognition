@@ -53,4 +53,5 @@ batch_size = 128
 model.fit(X_train, Y_train, batch_size=32, nb_epoch=40, verbose=1)
 
 score = model.evaluate(X_eval, Y_eval, verbose=0)
+print(score)
 tfjs.converters.save_keras_model(model, 'demo/model3')
