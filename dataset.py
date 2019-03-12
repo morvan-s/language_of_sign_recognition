@@ -30,6 +30,6 @@ def get_dataset():
     evalDataset = images[separationIndex:]
     trainClasses = classesDataset[:separationIndex]
     evalClasses = classesDataset[separationIndex:]
-
+    print(trainClasses[:5])
     return trainDataset, trainClasses, evalDataset, evalClasses
 get_dataset()
