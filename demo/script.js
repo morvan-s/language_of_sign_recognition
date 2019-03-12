@@ -6,7 +6,7 @@ const sleep = m => new Promise(r => setTimeout(r, m));
 
 async function initialise() {
 
-  const model = await tf.loadLayersModel('https://stivenmorvan.fr/projects/language_of_sign_recognition/demo/model/model.json');
+  const model = await tf.loadLayersModel('https://stivenmorvan.fr/projects/language_of_sign_recognition/demo/model2/model.json');
 
   async function capture() {
       while(true){
