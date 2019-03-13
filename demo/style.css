@@ -1,5 +1,9 @@
 :root {
-  --main-color: #1abc9c;
+  --gradientColor: black;
+  -webkit-animation: GradientColor 5s linear infinite; /* Safari 4+ */
+  -moz-animation:    GradientColor 5s linear infinite; /* Fx 5+ */
+  -o-animation:      GradientColor 5s linear infinite; /* Opera 12+ */
+  animation:         GradientColor 5s linear infinite;
 }
 
 html, body{
@@ -11,7 +15,7 @@ html, body{
 header{
   z-index: 2;
   width: calc(100% - 20px);
-  background: var(--main-color);
+  background: var(--gradientColor);
   position: absolute;
   padding: 10px;
 }
@@ -47,11 +51,13 @@ section{
 }
 
 canvas{
+  width: 64px;
+  height: 64px;
   position: absolute;
   z-index: 3;
   bottom: 0;
   left: 0;
-  border: 2px solid var(--main-color);
+  border: 2px solid var(--gradientColor);
 }
 
 video{
@@ -73,7 +79,7 @@ video{
   transform: translateX(-50%) translateY(-50%);
   width: calc(200 * (100vw / 640));
   height: calc(200 * (100vh / 400));
-  border: 3px dashed var(--main-color);
+  border: 3px dashed var(--gradientColor);
 }
 
 #result{
@@ -84,5 +90,5 @@ video{
   bottom: -70px;
   width: 100%;
   text-align: center;
-  text-shadow: -1px 0 var(--main-color), 0 1px var(--main-color), 1px 0 var(--main-color), 0 -1px var(--main-color);
+  text-shadow: -1px 0 var(--gradientColor), 0 1px var(--gradientColor), 1px 0 var(--gradientColor), 0 -1px var(--gradientColor);
 }
