@@ -10,14 +10,14 @@ async function initialise() {
   const model = await tf.loadLayersModel(model_url);
 
   let input = tf.browser.fromPixels(video,1);
-  let centery = Math.floor(input.shape[1] / 2);
-  let centerx = Math.floor(input.shape[2] / 2);
+  let centery = Math.floor(input.shape[0] / 2);
+  let centerx = Math.floor(input.shape[1] / 2);
   let half = Math.floor(cropLength / 2);
   let x1 = centerx - half;
   let y1 = centery - half;
   let x2 = centerx + half;
   let y2 = centery + half;
-  print(input.shape)
+
   let boxes = [[y1/input.shape[0], x1/input.shape[1], y2/input.shape[0], x2/input.shape[1]]]
 
   while(true){
@@ -27,14 +27,8 @@ async function initialise() {
     input = tf.image.cropAndResize(input.asType('float32'), boxes, [0], [64,64]);
 
     const res = (model.predict(input)).arraySync()[0];
-    console.log(res);
     let i = res.indexOf(Math.max(...res));
-    console.log(i);
-    if(res[i] >= 0.5){
-      result.textContent=i;
-    } else {
-      result.textContent="NaN";
-    }
+    (res[i] >= 0.5) ? result.textContent=i : result.textContent="NaN";
     input = tf.reshape(input,[64,64,1]);
     tf.browser.toPixels(input,canvas);
 
