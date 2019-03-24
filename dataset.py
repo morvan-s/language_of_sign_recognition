@@ -3,33 +3,37 @@ import random
 from matplotlib import pyplot as plt
 from keras.utils import np_utils
 
-def get_dataset():
+def load_data():
+    # Load images
     images = np.load('datasets/images.npy')
-    classesDataset = np.zeros(images.shape[0])
-    classesDataset[:204] = 9
-    classesDataset[204:409] = 0
-    classesDataset[409:615] = 7
-    classesDataset[615:822] = 6
-    classesDataset[822:1028] = 1
-    classesDataset[1028:1236] = 8
-    classesDataset[1236:1443] = 4
-    classesDataset[1443:1649] = 3
-    classesDataset[1649:1855] = 2
-    classesDataset[1855:] = 5
 
-    classesDataset = np_utils.to_categorical(classesDataset, 10)
+    # Match images with their value
+    classes = np.zeros(images.shape[0])
+    classes[:204] = 9
+    classes[204:409] = 0
+    classes[409:615] = 7
+    classes[615:822] = 6
+    classes[822:1028] = 1
+    classes[1028:1236] = 8
+    classes[1236:1443] = 4
+    classes[1443:1649] = 3
+    classes[1649:1855] = 2
+    classes[1855:] = 5
 
-    separationIndex = int(len(images) * 0.8)
+    # Reshape images to fit model
+    classes = np_utils.to_categorical(classes, 10)
     images = images.reshape(images.shape[0], 64, 64, 1)
 
-    combined = list(zip(images, classesDataset))
+    # Shuffle dataset
+    combined = list(zip(images, classes))
     random.shuffle(combined)
-    images[:], classesDataset[:] = zip(*combined)
+    images[:], classes[:] = zip(*combined)
 
-    trainDataset = images[:separationIndex]
-    evalDataset = images[separationIndex:]
-    trainClasses = classesDataset[:separationIndex]
-    evalClasses = classesDataset[separationIndex:]
-    print(trainClasses[:5])
-    return trainDataset, trainClasses, evalDataset, evalClasses
-get_dataset()
+    # Split dataset in two : 80% for training, 20% for tests
+    splitIndex = int(len(images) * 0.8)
+    x_train = images[:splitIndex]
+    x_test = images[splitIndex:]
+    y_train = classes[:splitIndex]
+    y_test = classes[splitIndex:]
+    
+    return (x_train, y_train), (x_test, y_test)
