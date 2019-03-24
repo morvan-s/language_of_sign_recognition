@@ -2,7 +2,7 @@ let canvas = document.getElementById('canvas');
 let video = document.getElementById('video');
 let result = document.getElementById('result');
 let cropLength = 200;
-let model_url = 'https://raw.githubusercontent.com/morvan-s/language_of_sign_recognition/master/demo/models/model2/model.json';
+let model_url = 'https://raw.githubusercontent.com/morvan-s/language_of_sign_recognition/master/demo/models/model/model.json';
 
 const sleep = m => new Promise(r => setTimeout(r, m));
 
