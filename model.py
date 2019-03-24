@@ -43,16 +43,16 @@ if DATA_AUGMENTATION:
     generator = ImageDataGenerator(
         featurewise_center=True,
         featurewise_std_normalization=True,
-        rotation_range=15,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        zoom_range=[0.9, 1.1],
+        rotation_range=40,
+        width_shift_range=0.3,
+        height_shift_range=0.3,
+        zoom_range=[0.7, 1.3],
     )
     model.fit_generator(
         generator.flow(x_train, y_train, batch_size=BATCH_SIZE),
         steps_per_epoch=len(x_train) // BATCH_SIZE,
         epochs=EPOCHS,
-        validation_data=generator.flow(x_test, y_test, batch_size=BATCH_SIZE)
+        validation_data=(x_test, y_test)
     )
 else:
     # Without data augmentation
@@ -70,5 +70,5 @@ print('Test loss:', loss)
 print('Test accuracy:', accuracy)
 
 # Save trained model according to TensorFlow.js format
-# import tensorflowjs as tfjs
-# tfjs.converters.save_keras_model(model, 'demo/model')
+import tensorflowjs as tfjs
+tfjs.converters.save_keras_model(model, 'demo/model2')
