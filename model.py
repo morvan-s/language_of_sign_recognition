@@ -71,4 +71,4 @@ print('Test accuracy:', accuracy)
 
 # Save trained model according to TensorFlow.js format
 # import tensorflowjs as tfjs
-# tfjs.converters.save_keras_model(model, 'demo/model2')
+# tfjs.converters.save_keras_model(model, 'demo/model/model4')

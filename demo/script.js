@@ -2,7 +2,7 @@ let canvas = document.getElementById('canvas');
 let video = document.getElementById('video');
 let result = document.getElementById('result');
 let cropLength = 200;
-let model_url = 'https://raw.githubusercontent.com/morvan-s/language_of_sign_recognition/master/demo/models/model2/model.json';
+let model_url = 'https://raw.githubusercontent.com/morvan-s/language_of_sign_recognition/master/demo/models/model/model.json';
 
 const sleep = m => new Promise(r => setTimeout(r, m));
 
@@ -28,6 +28,7 @@ async function initialise() {
 
     const res = (model.predict(input)).arraySync()[0];
     let i = res.indexOf(Math.max(...res));
+    console.log(res);
     (res[i] >= 0.5) ? result.textContent=i : result.textContent="NaN";
     input = tf.reshape(input,[64,64,1]);
     tf.browser.toPixels(input,canvas);
