@@ -52,7 +52,7 @@ if DATA_AUGMENTATION:
         generator.flow(x_train, y_train, batch_size=BATCH_SIZE),
         steps_per_epoch=len(x_train) // BATCH_SIZE,
         epochs=EPOCHS,
-        validation_data=(x_test, y_test)
+        validation_data=generator.flow(x_test, y_test, batch_size=BATCH_SIZE)
     )
 else:
     # Without data augmentation
@@ -70,5 +70,5 @@ print('Test loss:', loss)
 print('Test accuracy:', accuracy)
 
 # Save trained model according to TensorFlow.js format
-import tensorflowjs as tfjs
-tfjs.converters.save_keras_model(model, 'demo/model2')
+# import tensorflowjs as tfjs
+# tfjs.converters.save_keras_model(model, 'demo/model2')
