@@ -7,7 +7,7 @@ import numpy as np
 import dataset
 
 # Settings
-EPOCHS = 30
+EPOCHS = 50
 BATCH_SIZE = 32
 DATA_AUGMENTATION = True
 
@@ -70,4 +70,5 @@ print('Test loss:', loss)
 print('Test accuracy:', accuracy)
 
 # Save trained model according to TensorFlow.js format
-#tfjs.converters.save_keras_model(model, 'demo/model4')
+# import tensorflowjs as tfjs
+# tfjs.converters.save_keras_model(model, 'demo/model')
