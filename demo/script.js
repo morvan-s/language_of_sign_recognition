@@ -29,7 +29,7 @@ async function initialise() {
     const res = (model.predict(input)).arraySync()[0];
     let i = res.indexOf(Math.max(...res));
     console.log(res);
-    (res[i] >= 0.5) ? result.textContent=i : result.textContent="NaN";
+    (res[i] >= 0.4) ? result.textContent=i : result.textContent="NaN";
     input = tf.reshape(input,[64,64,1]);
     tf.browser.toPixels(input,canvas);
 
